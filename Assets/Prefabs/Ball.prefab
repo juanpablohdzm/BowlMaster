@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 54841094329236360}
   - component: {fileID: 114638058409009602}
   - component: {fileID: 82979247233906668}
+  - component: {fileID: 114376321510196494}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -39,7 +40,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1061632445228046}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 14, z: 27.800049}
+  m_LocalPosition: {x: 0, y: 36.6, z: 27.800049}
   m_LocalScale: {x: 21.7, y: 21.7, z: 21.7}
   m_Children: []
   m_Father: {fileID: 0}
@@ -179,6 +180,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114376321510196494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1061632445228046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca5f5499bf89916468bdb6da21632883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114638058409009602
 MonoBehaviour:
   m_ObjectHideFlags: 1
