@@ -20,13 +20,16 @@ public class DragLaunch : MonoBehaviour {
     //Launch ball
     public void OnDragEnd()
     {
-        FinishPos = Input.mousePosition;
-        FinishTime = Time.time;
-        float DragDuration = -StartTime + FinishTime;
-        float SpeedX = (-StartPos.x + FinishPos.x) / DragDuration;
-        float SpeedZ = (FinishPos.y - StartPos.y) / DragDuration;
-        
-        ball.Launch(new Vector3(SpeedX,0,SpeedZ));
+        if (!ball.InPlay)
+        {
+            FinishPos = Input.mousePosition;
+            FinishTime = Time.time;
+            float DragDuration = -StartTime + FinishTime;
+            float SpeedX = (-StartPos.x + FinishPos.x) / DragDuration;
+            float SpeedZ = (FinishPos.y - StartPos.y) / DragDuration;
+
+            ball.Launch(new Vector3(SpeedX, 0, SpeedZ));
+        }
     }
     public void MoveStart(float xNudge)
     {
