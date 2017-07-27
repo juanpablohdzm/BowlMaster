@@ -28,5 +28,14 @@ public class DragLaunch : MonoBehaviour {
         
         ball.Launch(new Vector3(SpeedX,0,SpeedZ));
     }
+    public void MoveStart(float xNudge)
+    {
+        if (!ball.InPlay)
+        {
+            ball.transform.Translate(new Vector3(xNudge, 0, 0));
+            
+        }
+       
+    }
     
 }
