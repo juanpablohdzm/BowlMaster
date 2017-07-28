@@ -35,8 +35,4 @@ public class Pins : MonoBehaviour {
         
     }
 
-    public void RenewPins()
-    {
-
-    }
 }

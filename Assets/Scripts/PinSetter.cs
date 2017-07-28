@@ -10,6 +10,7 @@ public class PinSetter : MonoBehaviour {
 
     public int LastStandingCount = -1;
     public Text PinCountDisplay;
+    public GameObject pinSet;
 
 
 	// Use this for initialization
@@ -41,6 +42,7 @@ public class PinSetter : MonoBehaviour {
     public void LowerPins()
     {
         PinArray = GameObject.FindObjectsOfType<Pins>();
+        print(PinArray.Length);
         for (int i = 0; i < PinArray.Length; i++)
         {
 
@@ -50,7 +52,14 @@ public class PinSetter : MonoBehaviour {
 
     public void RenewPins()
     {
-
+       GameObject Lane= Instantiate(pinSet, new Vector3(0, 79, 1829), Quaternion.identity);
+        Rigidbody[] childs = Lane.GetComponentsInChildren<Rigidbody>();
+        print("hello");
+        for (int i = 0; i < childs.Length; i++)
+        {
+            childs[i].useGravity = false;
+        }
+     
     }
 
     void CheckStanding()
@@ -100,7 +109,7 @@ public class PinSetter : MonoBehaviour {
         }
             //if (other.transform.parent.GetComponent<Pins>())
             //    StandingPins++;
-        }
+    }
     private void OnTriggerExit(Collider other)
     {
         //if (other.transform.parent.GetComponent<Pins>())
