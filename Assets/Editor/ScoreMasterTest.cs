@@ -91,6 +91,42 @@ public class ScoreMasterTest
         }
         Assert.AreEqual(ActionMaster.Action.EndGame, actionMaster.Bowl(1));
     }
+
+    [Test]
+    public void T09Strike19ThenSpare()
+    {
+
+        for (int i = 0; i < 18; i++)
+        {
+            actionMaster.Bowl(1);
+        }
+        actionMaster.Bowl(10);
+        Assert.AreEqual(tidy, actionMaster.Bowl(5));
+    }
+
+    [Test]
+    public void T10Extra()
+    {
+
+        for (int i = 0; i < 18; i++)
+        {
+            actionMaster.Bowl(1);
+        }
+        actionMaster.Bowl(10);
+        Assert.AreEqual(tidy, actionMaster.Bowl(0));
+    }
+
+    [Test]
+    public void T11Extra2()
+    {
+
+        for (int i = 0; i < 18; i++)
+        {
+            actionMaster.Bowl(1);
+        }
+        actionMaster.Bowl(10);
+        Assert.AreEqual(reset, actionMaster.Bowl(10));
+    }
 }
 
    

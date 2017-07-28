@@ -15,7 +15,15 @@ public class ActionMaster
             throw new UnityException("Not valid pin number");
 
         bowls[bowl-1] = pins;
-        if (bowl>=19 && Bowl21Awarded())
+        if(bowl==20 && Bowl21Awarded())
+        {
+            bowl++;
+            if (AllPinsKnockedDown() && bowls[19]!=0 )
+                return Action.Reset;
+            return Action.Tidy;
+        }
+               
+        if (bowl==19 && Bowl21Awarded())
         {
             bowl++;
             return Action.Reset;
@@ -55,5 +63,10 @@ public class ActionMaster
     private bool Bowl21Awarded()
     {
         return (bowls[18] + bowls[19] >= 10);
+    }
+
+    private bool AllPinsKnockedDown()
+    {
+        return ((bowls[18] + bowls[19])%10 == 0);
     }
 }
