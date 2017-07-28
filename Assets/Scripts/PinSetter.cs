@@ -8,7 +8,6 @@ public class PinSetter : MonoBehaviour {
     private float LastTimeChange;
     private Ball ball;
 
-    public float DistanceToRaisePins = 40f;
     public int LastStandingCount = -1;
     public Text PinCountDisplay;
 
@@ -34,8 +33,7 @@ public class PinSetter : MonoBehaviour {
         {
             if (PinArray[i].IsStanding())
             {
-                PinArray[i].transform.Translate(new Vector3(0, DistanceToRaisePins, 0));
-                PinArray[i].transform.GetComponent<Rigidbody>().useGravity = false;
+                PinArray[i].Raise();
             }
         }
     }
@@ -45,9 +43,8 @@ public class PinSetter : MonoBehaviour {
         PinArray = GameObject.FindObjectsOfType<Pins>();
         for (int i = 0; i < PinArray.Length; i++)
         {
-            
-                PinArray[i].transform.Translate(new Vector3(0, -DistanceToRaisePins, 0));
-                PinArray[i].transform.GetComponent<Rigidbody>().useGravity = true;
+
+            PinArray[i].Lower();
         }
     }
 
@@ -89,6 +86,7 @@ public class PinSetter : MonoBehaviour {
         {
             if (PinArray[i].IsStanding())
                 StandingPins++;
+
         }
         return StandingPins;
     }
