@@ -3,6 +3,7 @@
 public class Ball : MonoBehaviour {
 
     public Vector3 InitialVelocity = new Vector3(0,0,100f);
+    private Vector3 InitialPosition;
     private Rigidbody rigidbody;
     private AudioSource audioSource;
 
@@ -15,6 +16,8 @@ public class Ball : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         rigidbody.useGravity = false;
 
+        InitialPosition = transform.position;
+
 	}
 
     public void Launch(Vector3 InitialVelocity)
@@ -26,9 +29,12 @@ public class Ball : MonoBehaviour {
 
     }
 	
-	// Update is called once per frame
-	void Update ()
+	public void BallReset()
     {
-      
-	}
+        InPlay = false;
+        transform.position = InitialPosition;
+        rigidbody.useGravity = false;
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+    }
 }
