@@ -43,8 +43,8 @@ public class ScoreMasterTest
     [Test]
     public void T03SpareReturnsEndTurn()
     {
-        actionMaster.Bowl(2);
-        Assert.AreEqual(endTurn, actionMaster.Bowl(8));
+        actionMaster.Bowl(0);
+        Assert.AreEqual(endTurn, actionMaster.Bowl(1));
     }
 
     [Test]

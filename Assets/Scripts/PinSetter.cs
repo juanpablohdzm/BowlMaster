@@ -4,16 +4,17 @@ using UnityEngine.UI;
 public class PinSetter : MonoBehaviour {
     private Pins[] PinArray;
     private int StandingPins;
-    private bool BallEnteredBox=false;
     private float LastTimeChange;
     private Ball ball;
-    public int LastSettleCount=10;//TODO private
+    private int LastSettleCount=10;
     private ActionMaster actionMaster=new ActionMaster();
     private Animator animator;
 
+    public bool BallOutOfPlay = false;
     public int LastStandingCount = -1;
     public Text PinCountDisplay;
     public GameObject pinSet;
+   
 
 
 	// Use this for initialization
@@ -26,9 +27,12 @@ public class PinSetter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         PinCountDisplay.text = CountPinStanding().ToString();
-        if (BallEnteredBox)
+        if (BallOutOfPlay)
+        {
+            PinCountDisplay.color = Color.red;
             CheckStanding();
-           
+            
+        }
 	}
 
     private void PinsFallen()
@@ -60,7 +64,7 @@ public class PinSetter : MonoBehaviour {
 
     public void RenewPins()
     {
-       GameObject Lane= Instantiate(pinSet, new Vector3(0, 79, 1829), Quaternion.identity);
+       GameObject Lane= Instantiate(pinSet, new Vector3(0, 80, 1829), Quaternion.identity);
         Rigidbody[] childs = Lane.GetComponentsInChildren<Rigidbody>();
         for (int i = 0; i < childs.Length; i++)
         {
@@ -93,7 +97,7 @@ public class PinSetter : MonoBehaviour {
         LastSettleCount = countstanding;
         Animation(actionMaster.Bowl(PinFallen));
         ball.BallReset();
-        BallEnteredBox = false;
+        BallOutOfPlay = false;
         LastStandingCount = -1;
         PinCountDisplay.color = Color.green;
     }
@@ -111,16 +115,6 @@ public class PinSetter : MonoBehaviour {
         return StandingPins;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<Ball>())
-        {
-            BallEnteredBox = true;
-            PinCountDisplay.color = Color.red;
-        }
-            //if (other.transform.parent.GetComponent<Pins>())
-            //    StandingPins++;
-    }
     private void OnTriggerExit(Collider other)
     {
         //if (other.transform.parent.GetComponent<Pins>())
