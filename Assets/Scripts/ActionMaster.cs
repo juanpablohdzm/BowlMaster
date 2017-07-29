@@ -39,8 +39,10 @@ public class ActionMaster
 
         if (pins == 10)
         {
-           
-            bowl += 2;
+            if (bowl % 2 == 0)
+                bowl++;
+            else
+                bowl += 2;
             return Action.EndTurn;
             
         }

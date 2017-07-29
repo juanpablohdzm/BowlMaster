@@ -127,6 +127,18 @@ public class ScoreMasterTest
         actionMaster.Bowl(10);
         Assert.AreEqual(reset, actionMaster.Bowl(10));
     }
+
+    [Test]
+    public void T12LastThreeStrikes()
+    {
+        for (int i = 0; i < 18; i++)
+        {
+            actionMaster.Bowl(1);
+        }
+        Assert.AreEqual(reset,actionMaster.Bowl(10));
+        Assert.AreEqual(reset, actionMaster.Bowl(10));
+        Assert.AreEqual(ActionMaster.Action.EndGame, actionMaster.Bowl(10));
+    }
 }
 
    
