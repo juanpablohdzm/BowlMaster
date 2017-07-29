@@ -7,6 +7,9 @@ public class PinSetter : MonoBehaviour {
     private bool BallEnteredBox=false;
     private float LastTimeChange;
     private Ball ball;
+    public int LastSettleCount=10;//TODO private
+    private ActionMaster actionMaster=new ActionMaster();
+    private Animator animator;
 
     public int LastStandingCount = -1;
     public Text PinCountDisplay;
@@ -17,6 +20,7 @@ public class PinSetter : MonoBehaviour {
 	void Start () {
         StandingPins = 0;
         ball = GameObject.FindObjectOfType<Ball>();
+        animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -26,6 +30,11 @@ public class PinSetter : MonoBehaviour {
             CheckStanding();
            
 	}
+
+    private void PinsFallen()
+    {
+        actionMaster.Bowl(10 - CountPinStanding());
+    }
 
     public void RaisePins()
     {
@@ -42,7 +51,6 @@ public class PinSetter : MonoBehaviour {
     public void LowerPins()
     {
         PinArray = GameObject.FindObjectsOfType<Pins>();
-        print(PinArray.Length);
         for (int i = 0; i < PinArray.Length; i++)
         {
 
@@ -54,7 +62,6 @@ public class PinSetter : MonoBehaviour {
     {
        GameObject Lane= Instantiate(pinSet, new Vector3(0, 79, 1829), Quaternion.identity);
         Rigidbody[] childs = Lane.GetComponentsInChildren<Rigidbody>();
-        print("hello");
         for (int i = 0; i < childs.Length; i++)
         {
             childs[i].useGravity = false;
@@ -81,6 +88,10 @@ public class PinSetter : MonoBehaviour {
 
     void PinsHaveSettled()
     {
+        int countstanding = CountPinStanding();
+        int PinFallen = LastSettleCount - countstanding;
+        LastSettleCount = countstanding;
+        Animation(actionMaster.Bowl(PinFallen));
         ball.BallReset();
         BallEnteredBox = false;
         LastStandingCount = -1;
@@ -116,5 +127,16 @@ public class PinSetter : MonoBehaviour {
         //    StandingPins--;
         if(other.transform.parent.GetComponent<Pins>())
         Destroy(other.transform.parent.gameObject);
+    }
+
+    private void Animation(ActionMaster.Action action)
+    {
+        if (ActionMaster.Action.EndTurn == action || ActionMaster.Action.Reset == action)
+        {
+            animator.SetTrigger("ResetTrigger");
+            LastSettleCount = 10;
+        }
+        else
+            animator.SetTrigger("TidyTrigger");
     }
 }
