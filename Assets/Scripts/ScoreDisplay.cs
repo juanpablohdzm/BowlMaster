@@ -26,10 +26,37 @@ public class ScoreDisplay : MonoBehaviour {
         }
     }
 
-    private static string FormatRolls(List<int> rolls)
+    public static string FormatRolls(List<int> rolls)
     {
         string output = "";
+        for (int i = 0; i < rolls.Count; i++)
+        {
+            int box = output.Length+1;
+             if(rolls[i]==0)
+             {
+                output += "-";
+             }
+             else 
+                 if(box%2==0 && rolls[i - 1] + rolls[i] == 10)//Spare
+                 {
+                
+                    output +="/";
+                 }
+                 else
+                    if(i>=18 && rolls[i]==10) //Strike in last frame
+                    {
+                        output += "X";
+                    }
+                    else 
+                        if(rolls[i]==10) //strike
+                        {
+                            output += "X ";
+                        }
+                        else 
+                            if (rolls[i] < 10)
+                                output += rolls[i];
 
+        }
         return output;
     }
 }
