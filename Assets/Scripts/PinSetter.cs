@@ -48,6 +48,7 @@ public class PinSetter : MonoBehaviour {
             if (PinArray[i].IsStanding())
             {
                 PinArray[i].Raise();
+                
             }
         }
     }
@@ -57,8 +58,8 @@ public class PinSetter : MonoBehaviour {
         PinArray = GameObject.FindObjectsOfType<Pins>();
         for (int i = 0; i < PinArray.Length; i++)
         {
-
             PinArray[i].Lower();
+            PinArray[i].transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
 

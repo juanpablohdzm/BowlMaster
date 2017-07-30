@@ -2,12 +2,12 @@
 using UnityEditor;
 using UnityEngine.TestTools;
 using NUnit.Framework;
-using System.Collections;
+using System.Collections.Generic;
 
 [TestFixture]
 public class ScoreMasterTest
 {
-    private ActionMaster actionMaster;
+    private List<int> pinFalls;
     private ActionMaster.Action endTurn = ActionMaster.Action.EndTurn;
     private ActionMaster.Action tidy = ActionMaster.Action.Tidy;
     private ActionMaster.Action reset = ActionMaster.Action.Reset;
@@ -15,10 +15,10 @@ public class ScoreMasterTest
     [SetUp]
     public void Setup()
     {
-        actionMaster = new ActionMaster();
+        pinFalls = new List<int>();
     }
-        
-    
+
+
 
     [Test]
     public void FailingTest()
@@ -29,33 +29,35 @@ public class ScoreMasterTest
     [Test]
     public void T01FirstStrikeReturnsEndTurn()
     {
-
-        Assert.AreEqual(endTurn, actionMaster.Bowl(10));
+        pinFalls.Add(10);
+        Assert.AreEqual(endTurn, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
     public void T02Bowl8ReturnsTidy()
     {
-
-        Assert.AreEqual(tidy, actionMaster.Bowl(8));
+        pinFalls.Add(8);
+        Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
     public void T03SpareReturnsEndTurn()
     {
-        actionMaster.Bowl(0);
-        Assert.AreEqual(endTurn, actionMaster.Bowl(1));
+        pinFalls.Add(0);
+        pinFalls.Add(1);
+        Assert.AreEqual(endTurn, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
     public void T05CheckResetAtStrikeInLastFrame()
     {
-        
+
         for (int i = 0; i < 18; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-        Assert.AreEqual(reset, actionMaster.Bowl(10));
+        pinFalls.Add(10);
+        Assert.AreEqual(reset, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
@@ -63,10 +65,11 @@ public class ScoreMasterTest
     {
         for (int i = 0; i < 18; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-        actionMaster.Bowl(1);
-        Assert.AreEqual(reset, actionMaster.Bowl(9));
+        pinFalls.Add(1);
+        pinFalls.Add(9);
+        Assert.AreEqual(reset, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
@@ -74,22 +77,22 @@ public class ScoreMasterTest
     {
         for (int i = 0; i < 18; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-         actionMaster.Bowl(1);
-         actionMaster.Bowl(7);
-        Assert.AreEqual(ActionMaster.Action.EndGame, actionMaster.Bowl(2));
+        pinFalls.Add(1);
+        pinFalls.Add(7);
+        Assert.AreEqual(ActionMaster.Action.EndGame, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
     public void T08GameEndsAtBowl20()
     {
 
-        for (int i = 0; i < 19; i++)
+        for (int i = 0; i < 20; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-        Assert.AreEqual(ActionMaster.Action.EndGame, actionMaster.Bowl(1));
+        Assert.AreEqual(ActionMaster.Action.EndGame, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
@@ -98,10 +101,11 @@ public class ScoreMasterTest
 
         for (int i = 0; i < 18; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-        actionMaster.Bowl(10);
-        Assert.AreEqual(tidy, actionMaster.Bowl(5));
+        pinFalls.Add(10);
+        pinFalls.Add(5);
+        Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
@@ -110,10 +114,11 @@ public class ScoreMasterTest
 
         for (int i = 0; i < 18; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-        actionMaster.Bowl(10);
-        Assert.AreEqual(tidy, actionMaster.Bowl(0));
+        pinFalls.Add(10);
+        pinFalls.Add(0);
+        Assert.AreEqual(tidy, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
@@ -122,10 +127,10 @@ public class ScoreMasterTest
 
         for (int i = 0; i < 18; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-        actionMaster.Bowl(10);
-        Assert.AreEqual(reset, actionMaster.Bowl(10));
+        pinFalls.Add(10);
+        Assert.AreEqual(reset, ActionMaster.NextAction(pinFalls));
     }
 
     [Test]
@@ -133,11 +138,12 @@ public class ScoreMasterTest
     {
         for (int i = 0; i < 18; i++)
         {
-            actionMaster.Bowl(1);
+            pinFalls.Add(1);
         }
-        Assert.AreEqual(reset,actionMaster.Bowl(10));
-        Assert.AreEqual(reset, actionMaster.Bowl(10));
-        Assert.AreEqual(ActionMaster.Action.EndGame, actionMaster.Bowl(10));
+        pinFalls.Add(10);
+        pinFalls.Add(10);
+        pinFalls.Add(10);
+        Assert.AreEqual(ActionMaster.Action.EndGame, ActionMaster.NextAction(pinFalls));
     }
 }
 

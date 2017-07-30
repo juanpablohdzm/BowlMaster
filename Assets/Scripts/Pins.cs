@@ -11,7 +11,7 @@ public class Pins : MonoBehaviour {
         float TiltInX = Mathf.Abs(PinRotationEuler.x);
         float TiltInZ = Mathf.Abs(PinRotationEuler.z);
 
-        if ((TiltInX > StandingThreshold && TiltInX<360-StandingThreshold) || (TiltInZ > StandingThreshold && TiltInX < 360 - StandingThreshold))
+        if ((TiltInX > StandingThreshold && TiltInX<(360-StandingThreshold)) || (TiltInZ > StandingThreshold && TiltInZ < (360 - StandingThreshold)))
         {
             return false;
         }
@@ -21,8 +21,9 @@ public class Pins : MonoBehaviour {
     public void Raise()
     {
            
-                transform.Translate(new Vector3(0, DistanceToRaisePins, 0), Space.World);
-                transform.GetComponent<Rigidbody>().useGravity = false;
+        transform.Translate(new Vector3(0, DistanceToRaisePins, 0), Space.World);
+        transform.rotation = new Quaternion(0, 0, 0, 0);
+        transform.GetComponent<Rigidbody>().useGravity = false;
            
         
     }
@@ -30,9 +31,10 @@ public class Pins : MonoBehaviour {
     public void Lower()
     {
 
-            transform.Translate(new Vector3(0, -DistanceToRaisePins, 0), Space.World);
-            transform.GetComponent<Rigidbody>().useGravity = true;
+        transform.Translate(new Vector3(0, -DistanceToRaisePins, 0), Space.World);
+        transform.GetComponent<Rigidbody>().useGravity = true;
         
+
     }
 
 }

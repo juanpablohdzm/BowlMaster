@@ -71,4 +71,15 @@ public class ActionMaster
     {
         return ((bowls[18] + bowls[19])%10 == 0);
     }
+
+    public static Action NextAction(List<int> pinFalls)
+    {
+        ActionMaster am = new ActionMaster();
+        Action currentAction = new Action();
+        foreach(int pinFall in pinFalls)
+        {
+            currentAction = am.Bowl(pinFall);
+        }
+        return currentAction;
+    }
 }
