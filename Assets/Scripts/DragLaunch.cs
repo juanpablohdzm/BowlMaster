@@ -35,7 +35,11 @@ public class DragLaunch : MonoBehaviour {
     {
         if (!ball.InPlay)
         {
-            ball.transform.Translate(new Vector3(xNudge, 0, 0));
+            float Zpos = ball.transform.position.z;
+            float Ypos = ball.transform.position.y;
+            float Xpos =Mathf.Clamp( ball.transform.position.x+xNudge,-50f,50);
+
+            ball.transform.position = new Vector3(Xpos, Ypos, Zpos);
             
         }
        
