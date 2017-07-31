@@ -15,6 +15,14 @@ public class ScoreDisplayTest
     }
 
     [Test]
+    public void T01Bowl0()
+    {
+        int[] rolls = { 0,10 };
+        string rollstring = "-/";
+        Assert.AreEqual(rollstring, ScoreDisplay.FormatRolls(rolls.ToList()));
+    }
+
+    [Test]
     public void T01Bowl1()
     {
         int[] rolls = { 1 };

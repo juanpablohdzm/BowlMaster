@@ -37,7 +37,7 @@ public class ScoreDisplay : MonoBehaviour {
                 output += "-";
              }
              else 
-                 if(box%2==0 && rolls[i - 1] + rolls[i] == 10)//Spare
+                 if((box%2==0 || box==21) && rolls[i - 1] + rolls[i] == 10)//Spare
                  {
                 
                     output +="/";

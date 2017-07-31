@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     private PinSetter pinSetter;
     private Ball ball;
     private ScoreDisplay scoreDisplay;
+    public LevelManager levelManager;
 	// Use this for initialization
 	void Start () {
         pinSetter = GameObject.FindObjectOfType<PinSetter>();
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour {
     {
         rolls.Add(pinFall);
         ActionMaster.Action nextAction = ActionMaster.NextAction(rolls);
+        if (nextAction == ActionMaster.Action.EndGame)
+            levelManager.LoadNextLevel();
         pinSetter.Animation(nextAction);
         scoreDisplay.FillRollCard(rolls);
         scoreDisplay.FillScores(ScoreMaster.ScoreCumulative(rolls));
